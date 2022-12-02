@@ -9,9 +9,10 @@ const saveTimeVideo = function (time) {
 player.on('timeupdate', throttle(1000,saveTimeVideo ));
 
 function startLastTime() {
-  if (JSON.parse(localStorage.getItem('time'))) {
+  const currentTime = JSON.parse(localStorage.getItem('time'));
+  if (currentTime) {
     player
-      .setCurrentTime(JSON.parse(localStorage.getItem('time'))['seconds'])
+      .setCurrentTime(currentTime['seconds'])
       .then(function (seconds) {})
       .catch(function (error) {
         switch (error.name) {

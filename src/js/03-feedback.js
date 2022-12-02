@@ -5,17 +5,27 @@ const refs = {
   input: document.querySelector('input'),
   textarea: document.querySelector('.feedback-form textarea'),
 };
+
+const formData = {
+
+};
 refs.form.addEventListener('input', throttle(500,handleInput));
 refs.form.addEventListener('submit', e => {
   e.preventDefault();
+  console.log(JSON.parse(localStorage.getItem('feedback-form')));
   e.currentTarget.reset();
-  localStorage.clear();
+  localStorage.removeItem('feedback-form');
 });
 function handleInput(e) {
-  localStorage.setItem(e.target.name, JSON.stringify(e.target.value));
+  formData[e.target.name] = e.target.value;
+  localStorage.setItem('feedback-form', JSON.stringify(formData));
 }
 function addLocalData() {
-  refs.textarea.value = JSON.parse(localStorage.getItem('message')) || '';
-  refs.input.value = JSON.parse(localStorage.getItem('email')) || '';
+  const localDataForm = JSON.parse(localStorage.getItem('feedback-form'));
+  if(localDataForm === null){
+    return
+  }
+  refs.textarea.value = localDataForm['message'] || '';
+  refs.input.value = localDataForm['email'] || '';
 }
 addLocalData();
