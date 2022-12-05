@@ -6,9 +6,11 @@ const refs = {
   textarea: document.querySelector('.feedback-form textarea'),
 };
 
-const formData = {
+
+const formData = JSON.parse(localStorage.getItem('feedback-form')) || {
 
 };
+
 refs.form.addEventListener('input', throttle(500,handleInput));
 refs.form.addEventListener('submit', e => {
   e.preventDefault();
